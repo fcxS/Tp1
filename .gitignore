@@ -1,12 +1,112 @@
-*.class
+package intentoJuego;
+import java.awt.Color;
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+import entorno.Entorno;
 
-# Package Files #
-*.jar
-*.war
-*.ear
+import entorno.InterfaceJuego;
+public class Juegod extends InterfaceJuego {
+	
+	private Entorno entorno;
+	private Nave jnave;
+	
+	//variables  y metodos propios de cada grupo
+	//...
+	
+	Juegod()
+	{
+		this.jnave = new Nave();
+		
+		
+		//inicializa el objeto entorno 
+		//entorno = new Entorno(this ,"Prueba Zero.0.03",800,600);
+		
+		//inicializar  lo que haga falta para el juego
+		//...
+		
+		//inicia el juego
+		entorno =new Entorno(this,"Navesita de prueba",800,600);
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+	}
+	public void tick()
+	{if (this.entorno.estaPresionada(entorno.TECLA_DERECHA)){
+		this.jnave.derecha();
+	}
+	if (this.entorno.estaPresionada(entorno.TECLA_ABAJO)) {
+		this.jnave.bajar();
+	}
+	if (this.entorno.estaPresionada(entorno.TECLA_ARRIBA)) {
+		this.jnave.subir();
+	}
+	if (this.entorno.estaPresionada(entorno.TECLA_IZQUIERDA)) {
+		this.jnave.izquierda();
+		
+		this.jnave.corregirPosicion();
+		this.jnave.dibujar(this.entorno);
+	}
+		
+		
+		
+		//procesamiento  de un instante tiempo
+		//...	
+		}
+	
+	public static void main(String[] args){
+		Juegod juego=new Juegod();
+		
+	}
+ -----------------------------------------------------------------------------------------------------------------------------
+ package intentoJuego;
+import java.awt.Color;
+
+import entorno.Entorno;
+import entorno.InterfaceJuego;
+public class Nave  extends InterfaceJuego{
+private Entorno entorno;
+	
+//variables de instancia 
+	private double x;
+	private double y;
+	private double angulo;
+	private int base;
+	private int altura;
+
+public void pnave(){
+	this.x=400;
+	this.y=300;
+	this.angulo=90;
+	this.base=20;
+	this.altura=50;
+	
+	
+}
+
+public void dibujar(Entorno ent) {
+	entorno.dibujarTriangulo(this.x, this.y, this.altura, this.base, this.angulo, Color.PINK);
+}
+
+public void subir() {
+	this.y = this.y - 4;
+}
+
+public void bajar() {
+	this.y = this.y + 4;
+}
+
+public void derecha() {
+	this.x = this.x + 4;
+}
+
+public void izquierda() {
+	this.x = this.x - 4;
+}
+public void corregirPosicion() {
+	if (this.x > 800)
+		this.x = 0;
+	if (this.x < 0)
+		this.x = 800;
+	if (this.y > 600)
+		this.y = 0;
+	if (this.y < 0)
+		this.y = 600;
+}
+}
